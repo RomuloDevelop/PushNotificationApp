@@ -1,14 +1,15 @@
 import React, { Component, useState } from "react";
 import {View} from 'react-native';
 import { Container, Content, Textarea, Form, Item, Label, Input, Button, Text, H3 } from "native-base";
+import { globalStyle } from '../styles';
 import axios from 'axios';
 
 function MessageForm() {
-    const [title, setTitle] = useState('titulo local');
-    const [body, setBody] = useState('cuerpo local');
+    const [title, setTitle] = useState('titulo del mensaje');
+    const [body, setBody] = useState('cuerpo del mensaje');
     return (
-      <Container>
-        <Content padder>
+      <Container >
+        <Content contentContainerStyle={[globalStyle.container, {backgroundColor:'#ffffff'}]}>
           <View style={{margin:15}}>
             <H3>Crear Mensaje</H3>
             <Text style={{marginTop:10}}>Envia un mensaje a todo el grupo colocando un titulo y su descripción</Text>  
@@ -16,14 +17,14 @@ function MessageForm() {
           <Form>
             <Item stackedLabel>
               <Label>Titulo</Label>
-              <Input value={title} onChangeText={(value)=>setTitle(value)} />
+              <Input value={title} onChangeText={(value)=>setTitle(value)}/>
             </Item>
             <Textarea rowSpan={5} bordered placeholder="Cuerpo del mensaje" 
                 value={body}
                 onChangeText={(value)=>setBody(value)}/>
           </Form>
           <Button block info style={{marginTop:10}} onPress={()=>{
-            axios.post('http://192.168.1.100:4001/api/client/message', {title,body})
+            axios.post('https://dicappconsurso.herokuapp.com/api/client/message', {title,body})
             .then((response)=>{
               console.log(response);
             })
