@@ -1,14 +1,17 @@
 import React, { Component, useState } from "react";
 import {View} from 'react-native';
 import { Container, Content, Textarea, Form, Item, Label, Input, Button, Text, H3 } from "native-base";
+import LoaderScreen from '../components/LoaderScreen';
 import { globalStyle } from '../styles';
 import axios from 'axios';
 
 function MessageForm() {
     const [title, setTitle] = useState('titulo del mensaje');
     const [body, setBody] = useState('cuerpo del mensaje');
+    const [load, setLoad] = useState(false);
     return (
       <Container >
+        <LoaderScreen loading={load}/>
         <Content contentContainerStyle={[globalStyle.container, {backgroundColor:'#ffffff'}]}>
           <View style={{margin:15}}>
             <H3>Crear Mensaje</H3>
@@ -24,6 +27,7 @@ function MessageForm() {
                 onChangeText={(value)=>setBody(value)}/>
           </Form>
           <Button block info style={{marginTop:10}} onPress={()=>{
+            setLoad(true);
             axios.post('https://dicappconsurso.herokuapp.com/api/client/message', {title,body})
             .then((response)=>{
               console.log(response);
@@ -45,7 +49,8 @@ function MessageForm() {
                   console.log('Error', error.message);
                 }
                 console.log(error.config);
-            });
+            })
+            .finally(()=>setLoad(false));
           }}>
             <Text>Enviar</Text>
           </Button>

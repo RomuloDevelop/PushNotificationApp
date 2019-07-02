@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, ScrollView} from 'react-native';
 import { Container, Content } from "native-base";
 import OneSignal from 'react-native-onesignal';
 import MessageCard from '../components/MessageCard';
@@ -47,10 +47,10 @@ class MessageList extends Component {
     <Container>
       <Content contentContainerStyle={this.state.messages.length <= 0?styles.noData:globalStyle.container}>
       {(this.state.messages.length <= 0)?
-        (<NoDataIcon text="Sin mensajes para mostrar"/>):
-        this.state.messages.map((item, index)=>(
-          <MessageCard key={index} title={item.title} body={item.body}/>
-        ))}
+        (<NoDataIcon text="Sin mensajes para mostrar"/>):(
+          <ScrollView>
+            {this.state.messages.map((item, index)=><MessageCard key={index} title={item.title} body={item.body}/>)}
+          </ScrollView>)}
       </Content>
     </Container>
     );
