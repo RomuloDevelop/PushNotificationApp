@@ -18,7 +18,7 @@ function LoaderScreen(props){
             <ActivityIndicator
               color={colors.lightColor}
               size="large"
-              animating={loading} />
+              animating={loading}/>
           </View>
         </View>
       </Modal>
